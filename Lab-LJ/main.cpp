@@ -1,7 +1,9 @@
 #include <iostream>
-#include "DP/DP.h" 
+#include <chrono> 
+#include "DP/DP.h"
 
 using namespace std;
+using namespace chrono; 
 
 int main() {
     int n;
@@ -15,9 +17,20 @@ int main() {
     int maxWeight;
     cin >> maxWeight; // Input the maximum weight capacity of the knapsack
 
-    // knapsackDP
-    int maxValue = knapsackDP(maxWeight, items); 
+    // Start measuring time
+    auto start = high_resolution_clock::now();
+
+    // Call the knapsackDP function
+    int maxValue = knapsackDP(maxWeight, items);
+
+    // Stop measuring time
+    auto stop = high_resolution_clock::now();
+
+    // Calculate the duration
+    auto duration = duration_cast<milliseconds>(stop - start);
+
     cout << "Dynamic Programming: Value = " << maxValue << endl;
+    cout << "Execution Time: " << duration.count() << " ms" << endl;
 
     return 0;
 }
