@@ -2,14 +2,10 @@
 #define DP_H
 
 #include <vector>
+#include "../Item.h" 
 using namespace std;
 
-struct Item {
-    int weight;
-    int value;
-};
-
-// function knapsackDP
+// Function declaration
 int knapsackDP(int maxWeight, const vector<Item>& items);
 
-#endif 
+#endif // DP_H

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono> 
-#include "DP/DP.h"
+#include "DP/DP.h"   // Include Dynamic Programming header
+#include "SA/SA.h"   // Include Simulated Annealing header
 
 using namespace std;
 using namespace chrono; 
@@ -17,20 +18,23 @@ int main() {
     int maxWeight;
     cin >> maxWeight; // Input the maximum weight capacity of the knapsack
 
-    // Start measuring time
-    auto start = high_resolution_clock::now();
+    // Solve using Dynamic Programming
+    auto startDP = high_resolution_clock::now();
+    int maxValueDP = knapsackDP(maxWeight, items);
+    auto stopDP = high_resolution_clock::now();
+    auto durationDP = duration_cast<milliseconds>(stopDP - startDP);
 
-    // Call the knapsackDP function
-    int maxValue = knapsackDP(maxWeight, items);
+    cout << "Dynamic Programming: Value = " << maxValueDP << endl;
+    cout << "Execution Time (DP): " << durationDP.count() << " ms" << endl;
 
-    // Stop measuring time
-    auto stop = high_resolution_clock::now();
+    // Solve using Simulated Annealing
+    auto startSA = high_resolution_clock::now();
+    int maxValueSA = knapsackSA(maxWeight, items);
+    auto stopSA = high_resolution_clock::now();
+    auto durationSA = duration_cast<milliseconds>(stopSA - startSA);
 
-    // Calculate the duration
-    auto duration = duration_cast<milliseconds>(stop - start);
-
-    cout << "Dynamic Programming: Value = " << maxValue << endl;
-    cout << "Execution Time: " << duration.count() << " ms" << endl;
+    cout << "Simulated Annealing: Value = " << maxValueSA << endl;
+    cout << "Execution Time (SA): " << durationSA.count() << " ms" << endl;
 
     return 0;
 }
