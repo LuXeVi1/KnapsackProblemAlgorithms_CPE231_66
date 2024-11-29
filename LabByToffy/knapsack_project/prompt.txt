@@ -192,3 +192,58 @@ I hope this helps clarify the structure of the project. Let me know if you need 
 ---
 
 Let me know if this prompt works for you or if you’d like me to adjust anything!
+
+
+Please help me write a C implementation of the 0/1 Knapsack problem using a bruteforce approach. I need a function with the following signature:
+int bruteforceKnapsack(int n, int maxWeight, Product* products)
+
+Key requirements:
+- Generate all possible combinations of items
+- Ensure the total weight does not exceed maxWeight
+- Maximize the total cost of selected items
+- Mark selected items with isPick flag
+- Return the maximum total cost achievable
+
+Explain the algorithm's logic step-by-step:
+- How will you generate all combinations?
+- What approach will you use to track the best solution?
+- How will you handle weight and cost constraints?
+- Discuss the time complexity (expected to be O(2^n))
+
+Provide a detailed implementation with clear comments explaining each step of the logic.
+
+Project Structure:
+/knapsack_project/
+├── bruteforce/
+│   ├── bruteforce.c
+│   └── bruteforce.h
+├── decreaseandconquer/
+│   ├── decreaseandconquer.c
+│   └── decreaseandconquer.h
+├── divideandconquer/
+│   ├── divideandconquer.c
+│   └── divideandconquer.h
+├── dynamicprogramming/
+│   ├── dynamicprogramming.c
+│   └── dynamicprogramming.h
+├── GeneticAlgorithm/
+│   ├── GeneticAlgorithm.c
+│   └── GeneticAlgorithm.h
+├── greedytechnique/
+│   ├── greedytechnique.c
+│   └── greedytechnique.h
+├── iterativeimprovement/
+│   ├── iterativeimprovement.c
+│   └── iterativeimprovement.h
+├── spaceandtimetradeoff/
+│   ├── spacetimetradeoff.c
+│   └── spacetimetradeoff.h
+├── transformandconquer/
+│   ├── transformandconquer.c
+│   └── transformandconquer.h
+├── testcase/
+│   ├── 25.txt
+│   ├── 50.txt
+│   └── 100.txt
+├── main.C
+├── structure.h

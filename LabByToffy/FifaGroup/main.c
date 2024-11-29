@@ -263,14 +263,6 @@ int main()
     return 0;
 }
 
-
-
-
-
-
-
-
-
 // Function to get the device model (platform-dependent)
 void getDeviceModel(char *deviceModel, size_t size) {
 #ifdef _WIN32
