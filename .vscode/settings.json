@@ -53,6 +53,11 @@
         "__memory": "c",
         "optional": "c",
         "transformandconquer.h": "c",
-        "dynamicprogramming.h": "c"
+        "dynamicprogramming.h": "c",
+        "greedytechnique.h": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "queue": "c",
+        "string_view": "c"
     }
 }
