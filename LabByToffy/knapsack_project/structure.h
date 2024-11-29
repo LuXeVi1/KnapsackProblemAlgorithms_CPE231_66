@@ -8,6 +8,7 @@ typedef struct product {
     int productID;
     bool isPick;
     struct Product* next;
+    int value;
 } Product;
 
 #endif // STRUCTURE_H

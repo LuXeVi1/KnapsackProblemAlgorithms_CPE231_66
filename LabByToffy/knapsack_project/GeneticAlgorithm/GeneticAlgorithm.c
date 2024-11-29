@@ -1,7 +1,13 @@
 #include "GeneticAlgorithm.h"
+#include <string.h> // For memcpy and qsort
 
 // Utility functions
 static int max(int a, int b) { return a > b ? a : b; }
+
+// Compare integers (for qsort)
+static int compare_ints(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
 
 // Initialize population with random binary chromosomes
 static int** create_population(int population_size, int num_items) {
@@ -15,15 +21,15 @@ static int** create_population(int population_size, int num_items) {
     return population;
 }
 
-/ Swap integers
-void swapIntegers(int *a, int *b) {
+// Swap integers
+static void swapIntegers(int *a, int *b) {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
 // Partition function for fitness values
-int partitionFitness(int *fitness_values, int *indices, int low, int high) {
+static int partitionFitness(int *fitness_values, int *indices, int low, int high) {
     int pivot = fitness_values[high];
     int i = low - 1;
 
@@ -50,7 +56,6 @@ static int calculate_fitness(int* chromosome, Product* items, int num_items, int
             total_value += items[i].value;
         }
     }
-    
     return (*total_weight <= capacity) ? total_value : 0;
 }
 
@@ -79,8 +84,7 @@ static void perform_crossover(int* parent1, int* parent2, int num_items, int* ch
     for (int i = 1; i <= num_breakpoints; i++) {
         breakpoints[i] = rand() % (num_items - 1) + 1;
     }
-    qsort(breakpoints, num_breakpoints + 2, sizeof(int), 
-          (int (*)(const void*, const void*))compare_ints);
+    qsort(breakpoints, num_breakpoints + 2, sizeof(int), compare_ints);
 
     int toggle = 0;
     for (int i = 0; i < num_breakpoints + 1; i++) {
@@ -101,6 +105,7 @@ static void mutate_chromosome(int* chromosome, int num_items, double mutation_ra
     }
 }
 
+// Main Genetic Algorithm Function
 int genetic_algorithm(int num_items, int capacity, Product* items, 
                       int population_size, int generations, 
                       double mutation_rate, int elitism_count) {
@@ -112,11 +117,15 @@ int genetic_algorithm(int num_items, int capacity, Product* items,
 
     for (int gen = 0; gen < generations; gen++) {
         int* fitness_values = malloc(population_size * sizeof(int));
-        int* weights = malloc(population_size * sizeof(int));
+        int* cumulative_fitness = malloc(population_size * sizeof(int));
+        int total_fitness = 0;
 
         // Evaluate fitness of current population
         for (int i = 0; i < population_size; i++) {
-            fitness_values[i] = calculate_fitness(population[i], items, num_items, capacity, &weights[i]);
+            int weight;
+            fitness_values[i] = calculate_fitness(population[i], items, num_items, capacity, &weight);
+            total_fitness += fitness_values[i];
+            cumulative_fitness[i] = total_fitness;
         }
 
         // Track best solution
@@ -128,24 +137,15 @@ int genetic_algorithm(int num_items, int capacity, Product* items,
         }
 
         // Create new population
-        int** new_population = create_population(population_size, num_items);
-        int new_pop_index = 0;
-
-        // Elitism: copy best chromosomes
+        int** new_population = malloc(population_size * sizeof(int*));
         for (int i = 0; i < elitism_count; i++) {
-            int best_index = 0;
-            for (int j = 1; j < population_size; j++) {
-                if (fitness_values[j] > fitness_values[best_index]) {
-                    best_index = j;
-                }
-            }
-            memcpy(new_population[new_pop_index++], population[best_index], num_items * sizeof(int));
+            new_population[i] = malloc(num_items * sizeof(int));
+            memcpy(new_population[i], population[i], num_items * sizeof(int));
         }
 
-        // Crossover and mutation for remaining population
-        while (new_pop_index < population_size) {
-            int parent1 = select_parent(best_fitness, fitness_values, population_size);
-            int parent2 = select_parent(best_fitness, fitness_values, population_size);
+        for (int i = elitism_count; i < population_size; i++) {
+            int parent1 = select_parent(total_fitness, cumulative_fitness, population_size);
+            int parent2 = select_parent(total_fitness, cumulative_fitness, population_size);
 
             int* child1 = malloc(num_items * sizeof(int));
             int* child2 = malloc(num_items * sizeof(int));
@@ -155,34 +155,28 @@ int genetic_algorithm(int num_items, int capacity, Product* items,
             mutate_chromosome(child1, num_items, mutation_rate);
             mutate_chromosome(child2, num_items, mutation_rate);
 
-            memcpy(new_population[new_pop_index++], child1, num_items * sizeof(int));
-            if (new_pop_index < population_size) {
-                memcpy(new_population[new_pop_index++], child2, num_items * sizeof(int));
-            }
-
-            free(child1);
-            free(child2);
+            new_population[i] = (i + 1 < population_size) ? child2 : child1;
         }
 
-        // Free old population and update
+        // Free old population
         for (int i = 0; i < population_size; i++) {
             free(population[i]);
         }
         free(population);
+
         population = new_population;
 
-        // Cleanup
+        // Free fitness arrays
         free(fitness_values);
-        free(weights);
+        free(cumulative_fitness);
     }
 
-    // Cleanup and return best fitness
-    int result = best_fitness;
+    // Cleanup and return result
     for (int i = 0; i < population_size; i++) {
         free(population[i]);
     }
     free(population);
     free(best_solution);
 
-    return result;
+    return best_fitness;
 }
