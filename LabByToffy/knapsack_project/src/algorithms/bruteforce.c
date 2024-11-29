@@ -1,47 +1,46 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "algorithms.h"
+#include "./include/bruteforce.h"
 
-// Helper function to calculate the total value and weight of a subset
-void getSubsetValueAndWeight(int *weights, int *values, int *subset, int n, int *totalWeight, int *totalValue) {
-    *totalWeight = 0;
-    *totalValue = 0;
+/**
+ * Helper function to evaluate a specific subset of items.
+ * @param items Array of items.
+ * @param size Number of items in the array.
+ * @param subset Binary representation of the subset.
+ * @param maxWeight Maximum allowable weight.
+ * @param solution Pointer to the solution structure to update.
+ */
+static void evaluateSubset(const Item items[], int size, int subset, int maxWeight, Solution *solution) {
+    int currentWeight = 0;
+    int currentValue = 0;
+    bool included[MAX_ITEMS] = { false };
 
-    for (int i = 0; i < n; i++) {
-        if (subset[i] == 1) {  // If the item is included in the subset
-            *totalWeight += weights[i];
-            *totalValue += values[i];
+    for (int i = 0; i < size; i++) {
+        if (subset & (1 << i)) { // Check if item i is included in this subset
+            currentWeight += items[i].weight;
+            currentValue += items[i].value;
+            included[i] = true;
+        }
+    }
+
+    // If the current subset is valid and better than the best so far, update the solution
+    if (currentWeight <= maxWeight && currentValue > solution->totalValue) {
+        solution->totalValue = currentValue;
+        solution->totalWeight = currentWeight;
+        for (int i = 0; i < size; i++) {
+            solution->included[i] = included[i];
         }
     }
 }
 
-// Brute Force solution to the Knapsack problem
-int knapsackBruteForce(int capacity, int n, int weights[], int values[]) {
-    int maxValue = 0;
-
-    // Total number of possible subsets = 2^n
-    int totalSubsets = pow(2, n);
-
-    // Loop through all subsets
-    for (int subset = 0; subset < totalSubsets; subset++) {
-        int subsetArray[n];
-        int totalWeight = 0, totalValue = 0;
-
-        // Generate the subset by checking each bit
-        for (int i = 0; i < n; i++) {
-            // Check if the i-th item is in the subset (bit is set)
-            subsetArray[i] = (subset >> i) & 1;
-        }
-
-        // Calculate the total value and weight of this subset
-        getSubsetValueAndWeight(weights, values, subsetArray, n, &totalWeight, &totalValue);
-
-        // If the weight is within the capacity and the value is greater than the max value, update it
-        if (totalWeight <= capacity && totalValue > maxValue) {
-            maxValue = totalValue;
-        }
+Solution runBruteForce(const Item items[], int size, int maxWeight) {
+    Solution bestSolution = { .totalValue = 0, .totalWeight = 0 };
+    for (int i = 0; i < MAX_ITEMS; i++) {
+        bestSolution.included[i] = false;
     }
 
-    return maxValue;
+    int totalSubsets = 1 << size; // Total subsets = 2^size
+    for (int subset = 0; subset < totalSubsets; subset++) {
+        evaluateSubset(items, size, subset, maxWeight, &bestSolution);
+    }
+
+    return bestSolution;
 }

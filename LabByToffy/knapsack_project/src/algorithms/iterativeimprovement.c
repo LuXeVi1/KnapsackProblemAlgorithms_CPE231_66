@@ -1,96 +1,101 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "./include/iterativeimprovement.h"
 #include <stdbool.h>
-#include "algorithms.h"
+#include <stdlib.h>
 
-// Function to compute the total value of items in the knapsack
-int computeTotalValue(int n, int weights[], int values[], bool knapsack[]) {
+/**
+ * Evaluates the total value and weight of the current solution.
+ * @param items Array of items.
+ * @param size Number of items in the array.
+ * @param included Boolean array indicating which items are included.
+ * @return The total value of the current solution.
+ */
+int evaluateSolution(const Item items[], int size, bool included[]) {
     int totalValue = 0;
-    for (int i = 0; i < n; i++) {
-        if (knapsack[i]) {
-            totalValue += values[i];
+    int totalWeight = 0;
+
+    for (int i = 0; i < size; i++) {
+        if (included[i]) {
+            totalValue += items[i].value;
+            totalWeight += items[i].weight;
         }
     }
+
+    // Penalize the solution if it exceeds the maximum weight
+    if (totalWeight > MAX_WEIGHT) {
+        return 0;
+    }
+
     return totalValue;
 }
 
-// Function to compute the total weight of items in the knapsack
-int computeTotalWeight(int n, int weights[], bool knapsack[]) {
-    int totalWeight = 0;
-    for (int i = 0; i < n; i++) {
-        if (knapsack[i]) {
-            totalWeight += weights[i];
-        }
-    }
-    return totalWeight;
+/**
+ * Performs a simple swap between two items in the solution.
+ * @param included Boolean array indicating which items are included.
+ * @param i Index of the first item to swap.
+ * @param j Index of the second item to swap.
+ */
+void swapItems(bool included[], int i, int j) {
+    bool temp = included[i];
+    included[i] = included[j];
+    included[j] = temp;
 }
 
-// Function to perform the Iterative Improvement algorithm
-int knapsackIterativeImprovement(int capacity, int n, int weights[], int values[]) {
-    // Create an initial solution (greedy solution) where items are selected based on value-to-weight ratio
-    bool *knapsack = (bool *)malloc(n * sizeof(bool));
-    for (int i = 0; i < n; i++) {
-        knapsack[i] = false;
-    }
+/**
+ * Performs the Iterative Improvement algorithm to solve the Knapsack problem.
+ * @param items Array of items.
+ * @param size Number of items in the array.
+ * @return The best solution found.
+ */
+Solution runIterativeImprovement(const Item items[], int size) {
+    // Initialize the solution with all items excluded
+    bool *currentSolution = (bool *)calloc(size, sizeof(bool));
+    bool *bestSolution = (bool *)calloc(size, sizeof(bool));
 
-    // Sort items by value-to-weight ratio to initialize with a greedy solution
-    int *indices = (int *)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        indices[i] = i;
-    }
+    int bestValue = 0;
 
-    // Sort items by value-to-weight ratio in descending order
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            double ratioA = (double)values[indices[i]] / weights[indices[i]];
-            double ratioB = (double)values[indices[j]] / weights[indices[j]];
-            if (ratioA < ratioB) {
-                // Swap indices
-                int temp = indices[i];
-                indices[i] = indices[j];
-                indices[j] = temp;
-            }
-        }
-    }
+    // Initialize the best solution value
+    bestValue = evaluateSolution(items, size, currentSolution);
 
-    // Select items greedily
-    int totalWeight = 0;
-    for (int i = 0; i < n; i++) {
-        if (totalWeight + weights[indices[i]] <= capacity) {
-            knapsack[indices[i]] = true;
-            totalWeight += weights[indices[i]];
-        }
-    }
-
-    // Iterative Improvement loop
     bool improved = true;
+
+    // Keep iterating until no improvement is found
     while (improved) {
         improved = false;
-        // Try swapping items in the knapsack with those not in it
-        for (int i = 0; i < n; i++) {
-            if (knapsack[indices[i]]) {
-                // Item i is in the knapsack, try removing it and replacing with others
-                for (int j = 0; j < n; j++) {
-                    if (!knapsack[indices[j]] && totalWeight - weights[indices[i]] + weights[indices[j]] <= capacity) {
-                        // Swap item i with item j
-                        knapsack[indices[i]] = false;
-                        knapsack[indices[j]] = true;
-                        totalWeight = totalWeight - weights[indices[i]] + weights[indices[j]];
-                        improved = true;
-                        break;
+
+        // Try swapping each pair of items
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                // Swap the two items and evaluate the new solution
+                swapItems(currentSolution, i, j);
+                int newValue = evaluateSolution(items, size, currentSolution);
+
+                // If the new solution is better, update the best solution
+                if (newValue > bestValue) {
+                    bestValue = newValue;
+                    // Save the new solution as the best solution
+                    for (int k = 0; k < size; k++) {
+                        bestSolution[k] = currentSolution[k];
                     }
+                    improved = true;  // Set the flag to continue improving
                 }
+
+                // Undo the swap to test the next pair of items
+                swapItems(currentSolution, i, j);
             }
-            if (improved) break;  // Break outer loop if improvement was made
         }
     }
 
-    // Compute and return the final total value of the selected items
-    int totalValue = computeTotalValue(n, weights, values, knapsack);
+    // Convert the best solution into the Solution struct
+    Solution result = { .totalValue = bestValue, .totalWeight = 0 };
+    for (int i = 0; i < size; i++) {
+        if (bestSolution[i]) {
+            result.totalWeight += items[i].weight;
+        }
+    }
 
-    // Free dynamically allocated memory
-    free(knapsack);
-    free(indices);
+    // Clean up memory
+    free(currentSolution);
+    free(bestSolution);
 
-    return totalValue;
+    return result;
 }

@@ -1,57 +1,65 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "algorithms.h"
+#include "greedy.h"
 
-// Structure to represent an item with its weight, value, and value-to-weight ratio
-typedef struct {
-    int weight;
-    int value;
-    double ratio;  // value-to-weight ratio
-} Item;
-
-// Comparison function for sorting items by value-to-weight ratio in descending order
+/**
+ * Comparator function for sorting items based on their value-to-weight ratio.
+ * @param a Pointer to the first item.
+ * @param b Pointer to the second item.
+ * @return 1 if item a should be before item b, otherwise -1.
+ */
 int compareItems(const void *a, const void *b) {
     Item *itemA = (Item *)a;
     Item *itemB = (Item *)b;
+    double ratioA = (double)itemA->value / itemA->weight;
+    double ratioB = (double)itemB->value / itemB->weight;
 
-    if (itemA->ratio < itemB->ratio) {
-        return 1;
-    } else if (itemA->ratio > itemB->ratio) {
-        return -1;
-    } else {
-        return 0;
+    if (ratioA > ratioB) return -1;
+    else if (ratioA < ratioB) return 1;
+    return 0;
+}
+
+/**
+ * Solves the knapsack problem using the greedy algorithm.
+ * @param items Array of items.
+ * @param size Number of items in the array.
+ * @param maxWeight Maximum allowable weight.
+ * @param solution Pointer to the solution structure to update.
+ */
+void knapsackGreedy(const Item items[], int size, int maxWeight, Solution *solution) {
+    // Sort items by value-to-weight ratio in descending order
+    qsort((void *)items, size, sizeof(Item), compareItems);
+
+    solution->totalValue = 0;
+    solution->totalWeight = 0;
+
+    // Greedily select items
+    for (int i = 0; i < size; i++) {
+        if (solution->totalWeight + items[i].weight <= maxWeight) {
+            solution->totalValue += items[i].value;
+            solution->totalWeight += items[i].weight;
+            solution->included[i] = true;
+        } else {
+            solution->included[i] = false;
+        }
     }
 }
 
-// Function to solve the Knapsack problem using the Greedy approach
-int knapsackGreedy(int capacity, int n, int weights[], int values[]) {
-    // Create an array of items
-    Item *items = (Item *)malloc(n * sizeof(Item));
-    for (int i = 0; i < n; i++) {
-        items[i].weight = weights[i];
-        items[i].value = values[i];
-        items[i].ratio = (double)values[i] / weights[i];
+/**
+ * Solves the knapsack problem using the greedy approach.
+ * @param items Array of items to process.
+ * @param size Number of items in the array.
+ * @param maxWeight Maximum allowable weight.
+ * @return Solution struct containing the best result.
+ */
+Solution runGreedy(const Item items[], int size, int maxWeight) {
+    Solution bestSolution = { .totalValue = 0, .totalWeight = 0 };
+
+    // Initialize the solution array to all false (no items included)
+    for (int i = 0; i < MAX_ITEMS; i++) {
+        bestSolution.included[i] = false;
     }
 
-    // Sort the items based on the value-to-weight ratio in descending order
-    qsort(items, n, sizeof(Item), compareItems);
+    // Solve the problem using the greedy approach
+    knapsackGreedy(items, size, maxWeight, &bestSolution);
 
-    int totalValue = 0;
-    int totalWeight = 0;
-
-    // Greedily pick items until the knapsack is full or all items are considered
-    for (int i = 0; i < n; i++) {
-        if (totalWeight + items[i].weight <= capacity) {
-            totalWeight += items[i].weight;
-            totalValue += items[i].value;
-        } else {
-            break;  // No more items can be added
-        }
-    }
-
-    // Free the allocated memory for items
-    free(items);
-
-    return totalValue;
+    return bestSolution;
 }
