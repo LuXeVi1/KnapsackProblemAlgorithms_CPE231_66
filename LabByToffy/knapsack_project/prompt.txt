@@ -1,0 +1,96 @@
+Hi! I need help creating a complete C project for solving the Knapsack Problem. Here's the project structure, the components I need, and the functionality:
+Project Overview:The project involves implementing multiple algorithms to solve the Knapsack Problem. These algorithms will be modular, reusable, and integrated within the project structure.
+Project Structure:
+/knapsack_project/
+├── src/
+│   ├── main.c                     # Entry point for the program
+│   ├── algorithms/
+│   │   ├── bruteforce.c           # Brute force solution
+│   │   ├── dynamicprogramming.c   # Dynamic programming solution
+│   │   ├── greedy.c               # Greedy solution
+│   │   ├── fractionalknapsack.c   # Fractional Knapsack solution
+│   │   ├── geneticalgorithm.c     # Genetic algorithm solution
+│   │   ├── iterativeimprovement.c # Iterative improvement solution
+│   │   ├── divideandconquer.c     # Divide and conquer solution
+│   │   ├── decreaseandconquer.c   # Decrease and conquer solution
+│   │   └── spacetimetradeoff.c    # Space-time tradeoff solution
+│   └── utils/
+│       ├── filehandler.c          # File handling utilities
+│       ├── testcasegenerator.c    # Generate test cases
+│       ├── logger.c               # Logging utility
+│       └── deviceinfo.c           # Fetch system/device info
+├── include/
+│   ├── algorithms.h               # Algorithm function declarations
+│   ├── utils.h                    # Utility function declarations
+│   └── logger.h                   # Logger function declarations
+├── tests/                         # Unit testing for algorithms and utilities
+├── results/                       # Store algorithm outputs or logs
+├── Makefile                       # Build automation
+├── README.md                      # Documentation for the project
+```
+
+---
+
+### **Details for Implementation:**
+
+#### **1. Algorithms to Implement**
+Each algorithm file should define a function with the signature:
+```c
+int knapsackAlgorithmName(int capacity, int n, int weights[], int values[]);
+```
+- `capacity`: The maximum weight of the knapsack.
+- `n`: The number of items.
+- `weights[]`: Array of item weights.
+- `values[]`: Array of item values.
+- **Algorithms to implement**:
+  - Brute Force
+  - Dynamic Programming
+  - Greedy
+  - Fractional Knapsack
+  - Genetic Algorithm
+  - Iterative Improvement
+  - Divide and Conquer
+  - Decrease and Conquer
+  - Space-Time Tradeoff
+
+---
+
+#### **2. Utilities**
+- **File Handling**:
+  - Functions to read input files with test cases and write results.
+- **Test Case Generator**:
+  - Generate random test cases with weights, values, and capacity.
+- **Logger**:
+  - Log execution details like algorithm performance and selected items.
+
+---
+
+#### **3. Main File**
+- **`main.c`**:
+  - Integrates all algorithms and utilities.
+  - Reads configuration from `config.json`.
+  - Allows the user to choose algorithms and display results.
+
+---
+
+#### **4. Build System**
+- A **Makefile** to automate compilation and linking.
+- Commands:
+  - `make`: Build the project.
+  - `make clean`: Remove compiled files.
+
+---
+
+#### **5. Testing**
+- Write unit tests for each algorithm and utility function.
+
+---
+
+### **Deliverables:**
+- Complete, clean, and modular C code for the above structure.
+- Well-commented and documented code.
+- A `README.md` with instructions to build and run the project.
+
+---
+
+Can you help me write the full project? Let’s start by setting up the project structure and writing `main.c` first

@@ -1,0 +1,139 @@
+Device: Vivobook_ASUSLaptop K6602HE_K6602HE  
+
+Input Data:
+Product 1: Weight = 14, Cost = 45
+Product 2: Weight = 39, Cost = 316
+Product 3: Weight = 64, Cost = 250
+Product 4: Weight = 21, Cost = 365
+Product 5: Weight = 81, Cost = 90
+Product 6: Weight = 44, Cost = 231
+Product 7: Weight = 60, Cost = 335
+Product 8: Weight = 42, Cost = 382
+Product 9: Weight = 80, Cost = 390
+Product 10: Weight = 40, Cost = 394
+Product 11: Weight = 100, Cost = 258
+Product 12: Weight = 82, Cost = 50
+Product 13: Weight = 10, Cost = 391
+Product 14: Weight = 47, Cost = 42
+Product 15: Weight = 19, Cost = 315
+Product 16: Weight = 99, Cost = 137
+Product 17: Weight = 42, Cost = 77
+Product 18: Weight = 97, Cost = 87
+Product 19: Weight = 58, Cost = 388
+Product 20: Weight = 100, Cost = 321
+Product 21: Weight = 72, Cost = 277
+Product 22: Weight = 12, Cost = 302
+Product 23: Weight = 74, Cost = 361
+Product 24: Weight = 6, Cost = 175
+Product 25: Weight = 55, Cost = 255
+Product 26: Weight = 92, Cost = 226
+Product 27: Weight = 63, Cost = 377
+Product 28: Weight = 72, Cost = 36
+Product 29: Weight = 51, Cost = 332
+Product 30: Weight = 36, Cost = 51
+Product 31: Weight = 40, Cost = 353
+Product 32: Weight = 6, Cost = 32
+Product 33: Weight = 42, Cost = 327
+Product 34: Weight = 99, Cost = 378
+Product 35: Weight = 81, Cost = 65
+Product 36: Weight = 70, Cost = 132
+Product 37: Weight = 99, Cost = 44
+Product 38: Weight = 31, Cost = 301
+Product 39: Weight = 25, Cost = 123
+Product 40: Weight = 54, Cost = 232
+Product 41: Weight = 63, Cost = 69
+Product 42: Weight = 87, Cost = 109
+Product 43: Weight = 50, Cost = 184
+Product 44: Weight = 13, Cost = 311
+Product 45: Weight = 9, Cost = 193
+Product 46: Weight = 37, Cost = 46
+Product 47: Weight = 83, Cost = 379
+Product 48: Weight = 78, Cost = 59
+Product 49: Weight = 44, Cost = 269
+Product 50: Weight = 42, Cost = 251
+Product 51: Weight = 25, Cost = 103
+Product 52: Weight = 7, Cost = 305
+Product 53: Weight = 88, Cost = 41
+Product 54: Weight = 26, Cost = 194
+Product 55: Weight = 35, Cost = 350
+Product 56: Weight = 18, Cost = 276
+Product 57: Weight = 61, Cost = 375
+Product 58: Weight = 64, Cost = 373
+Product 59: Weight = 67, Cost = 265
+Product 60: Weight = 46, Cost = 336
+Product 61: Weight = 30, Cost = 88
+Product 62: Weight = 47, Cost = 317
+Product 63: Weight = 46, Cost = 242
+Product 64: Weight = 49, Cost = 353
+Product 65: Weight = 60, Cost = 384
+Product 66: Weight = 85, Cost = 288
+Product 67: Weight = 14, Cost = 97
+Product 68: Weight = 60, Cost = 180
+Product 69: Weight = 45, Cost = 400
+Product 70: Weight = 88, Cost = 298
+Product 71: Weight = 94, Cost = 120
+Product 72: Weight = 57, Cost = 153
+Product 73: Weight = 80, Cost = 287
+Product 74: Weight = 48, Cost = 327
+Product 75: Weight = 34, Cost = 40
+Product 76: Weight = 32, Cost = 34
+Product 77: Weight = 75, Cost = 205
+Product 78: Weight = 82, Cost = 216
+Product 79: Weight = 42, Cost = 106
+Product 80: Weight = 10, Cost = 147
+Product 81: Weight = 26, Cost = 137
+Product 82: Weight = 97, Cost = 93
+Product 83: Weight = 55, Cost = 105
+Product 84: Weight = 69, Cost = 334
+Product 85: Weight = 54, Cost = 305
+Product 86: Weight = 36, Cost = 303
+Product 87: Weight = 46, Cost = 109
+Product 88: Weight = 14, Cost = 356
+Product 89: Weight = 99, Cost = 379
+Product 90: Weight = 49, Cost = 267
+Product 91: Weight = 7, Cost = 255
+Product 92: Weight = 47, Cost = 258
+Product 93: Weight = 21, Cost = 202
+Product 94: Weight = 26, Cost = 394
+Product 95: Weight = 65, Cost = 193
+Product 96: Weight = 9, Cost = 382
+Product 97: Weight = 91, Cost = 118
+Product 98: Weight = 83, Cost = 310
+Product 99: Weight = 45, Cost = 169
+Product 100: Weight = 49, Cost = 348
+Max Weight: 4000
+
+Algorithm: Transform and Conquer
+Maximum cost: 21928
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Space & Time Trade-Offs
+Maximum cost: 21921
+Run time: 0.001000 seconds
+==============================================
+
+Algorithm: Dynamic Programming
+Maximum cost: 21921
+Run time: 0.003000 seconds
+==============================================
+
+Algorithm: Iterative Improvement
+Maximum cost: 21921
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Greedy
+Maximum cost: 21530
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Genetic Algorithm
+Population Size: 151
+Genetations Quantity: 900
+Mutation Rate: 0.010000
+Elitism Size: 13
+
+Maximum cost: 14746
+Run time: 0.389000 seconds
+==============================================

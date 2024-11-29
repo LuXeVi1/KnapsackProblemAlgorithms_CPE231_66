@@ -1,0 +1,79 @@
+Device: Vivobook_ASUSLaptop K6602HE_K6602HE  
+
+Input Data:
+Product 1: Weight = 2, Cost = 88
+Product 2: Weight = 16, Cost = 31
+Product 3: Weight = 21, Cost = 59
+Product 4: Weight = 17, Cost = 78
+Product 5: Weight = 9, Cost = 59
+Product 6: Weight = 25, Cost = 35
+Product 7: Weight = 13, Cost = 80
+Product 8: Weight = 9, Cost = 75
+Product 9: Weight = 18, Cost = 75
+Product 10: Weight = 15, Cost = 92
+Product 11: Weight = 18, Cost = 61
+Product 12: Weight = 14, Cost = 79
+Product 13: Weight = 22, Cost = 55
+Product 14: Weight = 13, Cost = 94
+Product 15: Weight = 24, Cost = 53
+Product 16: Weight = 13, Cost = 32
+Product 17: Weight = 10, Cost = 35
+Product 18: Weight = 10, Cost = 60
+Product 19: Weight = 11, Cost = 73
+Product 20: Weight = 13, Cost = 61
+Product 21: Weight = 9, Cost = 63
+Product 22: Weight = 22, Cost = 54
+Product 23: Weight = 9, Cost = 44
+Product 24: Weight = 8, Cost = 68
+Product 25: Weight = 21, Cost = 71
+Max Weight: 1000
+
+Algorithm: Bruteforce
+Maximum cost: 1575
+Run time: 2.874000 seconds
+==============================================
+
+Algorithm: Decrease and Conquer
+Maximum cost: 1575
+Run time: 0.161000 seconds
+==============================================
+
+Algorithm: Divide and Conquer
+Maximum cost: 1575
+Run time: 0.167000 seconds
+==============================================
+
+Algorithm: Transform and Conquer
+Maximum cost: 1575
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Space & Time Trade-Offs
+Maximum cost: 1575
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Dynamic Programming
+Maximum cost: 1575
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Iterative Improvement
+Maximum cost: 1575
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Greedy
+Maximum cost: 1575
+Run time: 0.000000 seconds
+==============================================
+
+Algorithm: Genetic Algorithm
+Population Size: 151
+Genetations Quantity: 900
+Mutation Rate: 0.010000
+Elitism Size: 13
+
+Maximum cost: 1196
+Run time: 0.388000 seconds
+==============================================
