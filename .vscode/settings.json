@@ -44,6 +44,15 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp",
-        "utils.h": "c"
+        "utils.h": "c",
+        "bruteforce.h": "c",
+        "geneticalgorithm.h": "c",
+        "__bit_reference": "c",
+        "__node_handle": "c",
+        "bitset": "c",
+        "__memory": "c",
+        "optional": "c",
+        "transformandconquer.h": "c",
+        "dynamicprogramming.h": "c"
     }
 }
